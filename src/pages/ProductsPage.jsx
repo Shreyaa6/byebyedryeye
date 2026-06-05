@@ -11,27 +11,32 @@ const CATEGORY_ICONS = {
 
 export default function ProductsPage() {
   return (
-    <div className="py-10 md:py-16">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-14">
-          <span className="eyebrow mb-3">
-            Product Guide
-          </span>
-          <h1 className="font-display text-3xl md:text-4xl font-bold text-green-dark mb-4">
-            Informed Product Recommendations
-          </h1>
-          <p className="text-green-dark/70 leading-relaxed">
-            These are informational recommendations — not a storefront. We don't sell anything.
-            Each product is categorized by type with guidance on who it may help most.
-            Always consult your eye care professional before starting new treatments.
-          </p>
+    <div>
+      <section className="section-band-light py-10 md:py-16">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-2xl mx-auto">
+            <span className="eyebrow mb-3">
+              Product Guide
+            </span>
+            <h1 className="font-display text-3xl md:text-4xl font-bold text-green-dark mb-4">
+              Informed Product Recommendations
+            </h1>
+            <p className="text-green-dark/70 leading-relaxed">
+              These are informational recommendations — not a storefront. We don't sell anything.
+              Each product is categorized by type with guidance on who it may help most.
+              Always consult your eye care professional before starting new treatments.
+            </p>
+          </div>
         </div>
+      </section>
 
-        <div className="space-y-16">
-          {PRODUCT_CATEGORIES.map((category) => {
-            const CategoryIcon = CATEGORY_ICONS[category.id];
-            return (
-            <section key={category.id}>
+      {PRODUCT_CATEGORIES.map((category, idx) => {
+        const CategoryIcon = CATEGORY_ICONS[category.id];
+        const sectionClass = idx % 2 === 0 ? 'section-band-dark' : 'section-band-light';
+
+        return (
+          <section key={category.id} className={`${sectionClass} py-16 md:py-20`}>
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="flex items-start gap-4 mb-6">
                 <CategoryIcon size={36} className="shrink-0" />
                 <div>
@@ -77,22 +82,25 @@ export default function ProductsPage() {
                   </div>
                 ))}
               </div>
-            </section>
-          );
-          })}
-        </div>
+            </div>
+          </section>
+        );
+      })}
 
-        <div className="deep-panel mt-16 rounded-[2rem] p-8 md:p-10 text-center">
-          <p className="text-green-light/90 leading-relaxed max-w-2xl mx-auto mb-2">
-            Not sure where to start? Take our free OSDI assessment to understand your symptom
-            severity, then discuss results with your eye care professional.
-          </p>
-          <p className="text-green-light/50 text-xs">
-            Product links open Amazon search results for convenience. BuyBuy Dry Eye is not affiliated
-            with any product manufacturer and receives no commission.
-          </p>
+      <section className="section-band-dark py-16">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="deep-panel rounded-[2rem] p-8 md:p-10 text-center">
+            <p className="text-green-light/90 leading-relaxed max-w-2xl mx-auto mb-2">
+              Not sure where to start? Take our free OSDI assessment to understand your symptom
+              severity, then discuss results with your eye care professional.
+            </p>
+            <p className="text-green-light/50 text-xs">
+              Product links open Amazon search results for convenience. ByeByeDryEye is not affiliated
+              with any product manufacturer and receives no commission.
+            </p>
+          </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 }

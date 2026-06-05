@@ -102,6 +102,7 @@ export default function QuizPage() {
   const [answers, setAnswers] = useState({});
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState([]);
+  const [currentSection, setCurrentSection] = useState(0);
 
   const handleAnswer = (questionId, value) => {
     setAnswers((prev) => ({ ...prev, [questionId]: value }));
@@ -112,6 +113,35 @@ export default function QuizPage() {
     setAnswers({});
     setSubmitted(false);
     setErrors([]);
+    setCurrentSection(0);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const validateSection = (sectionIndex) => {
+    const unanswered = OSDI_SECTIONS[sectionIndex].questions
+      .map((q) => q.id)
+      .filter((id) => answers[id] === undefined);
+
+    if (unanswered.length > 0) {
+      setErrors(unanswered);
+      const el = document.getElementById(`question-${unanswered[0]}`);
+      el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return false;
+    }
+
+    setErrors([]);
+    return true;
+  };
+
+  const handleNextSection = () => {
+    if (!validateSection(currentSection)) return;
+    setCurrentSection((prev) => Math.min(prev + 1, OSDI_SECTIONS.length - 1));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handlePreviousSection = () => {
+    setErrors([]);
+    setCurrentSection((prev) => Math.max(prev - 1, 0));
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -121,8 +151,14 @@ export default function QuizPage() {
     const unanswered = allIds.filter((id) => answers[id] === undefined);
     if (unanswered.length > 0) {
       setErrors(unanswered);
-      const el = document.getElementById(`question-${unanswered[0]}`);
-      el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      const nextSection = OSDI_SECTIONS.findIndex((section) =>
+        section.questions.some((question) => question.id === unanswered[0]),
+      );
+      setCurrentSection(nextSection === -1 ? 0 : nextSection);
+      setTimeout(() => {
+        const el = document.getElementById(`question-${unanswered[0]}`);
+        el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 0);
       return;
     }
     setSubmitted(true);
@@ -130,13 +166,17 @@ export default function QuizPage() {
   };
 
   const result = submitted ? calculateOSDIScore(answers) : null;
+  const section = OSDI_SECTIONS[currentSection];
+  const totalSections = OSDI_SECTIONS.length;
+  const answeredCount = Object.keys(answers).length;
+  const progressPercent = Math.round(((currentSection + 1) / totalSections) * 100);
 
   return (
-    <div className="py-10 md:py-16">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        {!submitted ? (
-          <>
-            <div className="text-center mb-10">
+    <div>
+      {!submitted ? (
+        <>
+          <section className="section-band-light py-10 md:py-16">
+            <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
               <Link to="/" className="inline-flex items-center gap-1 text-green-mid text-sm mb-6 hover:text-green-dark transition-colors">
                 <ArrowLeft size={16} /> Back to Home
               </Link>
@@ -149,16 +189,30 @@ export default function QuizPage() {
                 experiences <strong>during the past week</strong>.
               </p>
             </div>
+          </section>
 
-            <form onSubmit={handleSubmit} className="space-y-10">
-              {OSDI_SECTIONS.map((section, sIdx) => (
-                <div key={section.title}>
-                  <div className="mb-6">
-                    <span className="eyebrow">
-                      Section {sIdx + 1} of 3
-                    </span>
-                    <h2 className="font-display text-xl font-semibold text-green-dark mt-1">{section.title}</h2>
-                    <p className="text-sm text-green-dark/60 mt-1">{section.subtitle}</p>
+          <section className="section-band-dark py-16 md:py-20">
+            <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+              <form onSubmit={handleSubmit} className="space-y-8">
+                <div className="soft-surface rounded-[2rem] p-6 md:p-8">
+                  <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-5">
+                    <div>
+                      <span className="eyebrow">
+                        Section {currentSection + 1} of {totalSections}
+                      </span>
+                      <h2 className="font-display text-xl md:text-2xl font-semibold text-green-dark mt-2">{section.title}</h2>
+                      <p className="text-sm text-green-dark/60 mt-1">{section.subtitle}</p>
+                    </div>
+                    <div className="text-sm text-green-dark/60">
+                      {answeredCount} of 12 answered
+                    </div>
+                  </div>
+
+                  <div className="h-2 rounded-full bg-green-bg/80 overflow-hidden mb-8">
+                    <div
+                      className="h-full rounded-full bg-gradient-to-r from-green-mid to-green-dark transition-all duration-300"
+                      style={{ width: `${progressPercent}%` }}
+                    />
                   </div>
 
                   <div className="space-y-6">
@@ -166,7 +220,7 @@ export default function QuizPage() {
                       <div
                         key={q.id}
                         id={`question-${q.id}`}
-                        className={`soft-surface rounded-[1.6rem] p-5 md:p-6 transition-all ${
+                        className={`soft-panel rounded-[1.6rem] p-5 md:p-6 transition-all ${
                           errors.includes(q.id) ? 'ring-2 ring-[#c58c84]' : ''
                         }`}
                       >
@@ -183,7 +237,7 @@ export default function QuizPage() {
                               className={`px-2 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all duration-150 ${
                                 answers[q.id] === opt.value
                                   ? 'bg-green-dark text-white shadow-[0_10px_22px_rgba(54,83,71,0.16)]'
-                                  : 'bg-green-bg/55 text-green-dark/70 hover:bg-green-light/60'
+                                  : 'bg-white/70 text-green-dark/70 hover:bg-green-light/60'
                               }`}
                             >
                               {opt.label}
@@ -193,27 +247,53 @@ export default function QuizPage() {
                       </div>
                     ))}
                   </div>
-                </div>
-              ))}
 
-              <div className="text-center pt-4">
-                <button
-                  type="submit"
-                  className="primary-button inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold"
-                >
-                  Calculate My Score
-                  <ArrowRight size={18} />
-                </button>
-                {errors.length > 0 && (
-                  <p className="text-[#9d5e58] text-sm mt-3">Please answer all 12 questions before submitting.</p>
-                )}
-              </div>
-            </form>
-          </>
-        ) : (
-          result && <ResultView result={result} onRetake={handleRetake} />
-        )}
-      </div>
+                  {errors.length > 0 && (
+                    <p className="text-[#9d5e58] text-sm mt-5">Please answer every question in this section before continuing.</p>
+                  )}
+
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mt-8">
+                    <button
+                      type="button"
+                      onClick={handlePreviousSection}
+                      disabled={currentSection === 0}
+                      className="secondary-button inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-medium disabled:opacity-45 disabled:cursor-not-allowed"
+                    >
+                      <ArrowLeft size={16} />
+                      Previous
+                    </button>
+
+                    {currentSection < totalSections - 1 ? (
+                      <button
+                        type="button"
+                        onClick={handleNextSection}
+                        className="primary-button inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-medium"
+                      >
+                        Next Section
+                        <ArrowRight size={16} />
+                      </button>
+                    ) : (
+                      <button
+                        type="submit"
+                        className="primary-button inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-semibold"
+                      >
+                        Calculate My Score
+                        <ArrowRight size={18} />
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </form>
+            </div>
+          </section>
+        </>
+      ) : (
+        <section className="section-band-light py-10 md:py-16">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            {result && <ResultView result={result} onRetake={handleRetake} />}
+          </div>
+        </section>
+      )}
     </div>
   );
 }

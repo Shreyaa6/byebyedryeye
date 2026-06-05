@@ -130,6 +130,22 @@ img {
   background: rgba(225, 234, 220, 0.92);
 }
 
+.section-band-light,
+.section-band-dark {
+  position: relative;
+}
+
+.section-band-light {
+  background: linear-gradient(180deg, rgba(248, 250, 245, 0.92) 0%, rgba(241, 246, 238, 0.84) 100%);
+}
+
+.section-band-dark {
+  background: linear-gradient(180deg, rgba(224, 233, 221, 0.96) 0%, rgba(212, 224, 211, 0.96) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    inset 0 -1px 0 rgba(54, 83, 71, 0.05);
+}
+
 .soft-surface {
   background: linear-gradient(180deg, var(--surface-strong) 0%, rgba(250, 252, 248, 0.78) 100%);
   border: 1px solid var(--border-soft);

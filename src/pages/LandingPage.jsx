@@ -64,7 +64,7 @@ export default function LandingPage() {
   return (
     <div>
       {/* Hero */}
-      <section className="relative overflow-hidden">
+      <section className="section-band-light relative overflow-hidden">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
@@ -118,7 +118,7 @@ export default function LandingPage() {
       </section>
 
       {/* What is Dry Eye */}
-      <section id="what-is-dry-eye" className="py-16 md:py-24">
+      <section id="what-is-dry-eye" className="section-band-dark py-16 md:py-24">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader
             badge="Understanding Dry Eye"
@@ -168,7 +168,7 @@ export default function LandingPage() {
       </section>
 
       {/* Who is Affected */}
-      <section className="py-16 md:py-24">
+      <section className="section-band-light py-16 md:py-24">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader
             badge="By the Numbers"
@@ -201,7 +201,7 @@ export default function LandingPage() {
       </section>
 
       {/* Misdiagnosis */}
-      <section className="py-16 md:py-24">
+      <section className="section-band-dark py-16 md:py-24">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <img
@@ -246,7 +246,7 @@ export default function LandingPage() {
       </section>
 
       {/* Lifestyle Triggers */}
-      <section className="py-16 md:py-24">
+      <section className="section-band-light py-16 md:py-24">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader
             badge="Daily Life"
@@ -266,7 +266,7 @@ export default function LandingPage() {
       </section>
 
       {/* Diet Tips */}
-      <section className="py-16 md:py-24">
+      <section className="section-band-dark py-16 md:py-24">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader
             badge="Nutrition & Hydration"
@@ -286,7 +286,7 @@ export default function LandingPage() {
       </section>
 
       {/* How We Help */}
-      <section className="py-16 md:py-24">
+      <section className="section-band-light py-16 md:py-24">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader
             badge="Our Approach"
@@ -306,7 +306,7 @@ export default function LandingPage() {
       </section>
 
       {/* CTA Strip */}
-      <section className="py-16">
+      <section className="section-band-dark py-16">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <div className="deep-panel rounded-[2.25rem] px-6 py-10 md:px-10">
             <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-4">
