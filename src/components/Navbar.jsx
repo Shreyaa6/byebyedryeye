@@ -22,11 +22,11 @@ export default function Navbar() {
           <Link to="/" className="flex items-center gap-2.5 group">
             <img
               src={logo}
-              alt="BuyBuy Dry Eye logo"
+              alt="ByeByeDryEye logo"
               className="h-8 w-auto max-w-[4.75rem] object-contain transition-transform group-hover:scale-[1.02]"
             />
             <span className="font-display font-semibold text-lg tracking-tight text-green-dark">
-              BuyBuy Dry Eye
+              ByeByeDryEye
             </span>
           </Link>
 

@@ -81,7 +81,7 @@ export default function LandingPage() {
                 dismissed or misdiagnosed.
               </p>
               <p className="text-green-dark/60 leading-relaxed mb-8">
-                We hear you. BuyBuy Dry Eye is here to help you understand what's happening,
+                We hear you. ByeByeDryEye is here to help you understand what's happening,
                 assess your symptoms, and find practical paths to relief — always alongside
                 professional eye care.
               </p>

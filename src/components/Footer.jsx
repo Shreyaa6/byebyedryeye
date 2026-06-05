@@ -12,10 +12,10 @@ export default function Footer() {
               <div className="flex items-center gap-3 mb-6">
                 <img
                   src={logo}
-                  alt="BuyBuy Dry Eye logo"
+                  alt="ByeByeDryEye logo"
                   className="h-8 w-auto max-w-[4.75rem] object-contain"
                 />
-                <span className="font-display font-semibold text-2xl tracking-tight">BuyBuy Dry Eye</span>
+                <span className="font-display font-semibold text-2xl tracking-tight">ByeByeDryEye</span>
               </div>
               <p className="max-w-xs text-sm leading-relaxed text-white/82 mb-5">
                 Minimal, evidence-based guidance for people living with dry eye.
@@ -44,9 +44,9 @@ export default function Footer() {
               </h4>
               <div className="space-y-3 text-sm text-white/82">
                 <p className="font-medium text-white">Narendra Kumar</p>
-                <a href="mailto:hello@buybuydryeye.com" className="flex items-center gap-2 hover:text-white">
+                <a href="mailto:hello@byebyedryeye.com" className="flex items-center gap-2 hover:text-white">
                   <Mail size={15} />
-                  <span>hello@buybuydryeye.com</span>
+                  <span>hello@byebyedryeye.com</span>
                 </a>
                 <a href="tel:+919919748714" className="flex items-center gap-2 hover:text-white">
                   <Phone size={15} />
@@ -91,7 +91,7 @@ export default function Footer() {
               Medical disclaimer: This website shares educational information only and is not a substitute for professional medical advice, diagnosis, or treatment.
             </p>
             <p className="text-xs text-white/58">
-              © {new Date().getFullYear()} BuyBuy Dry Eye. All rights reserved.
+              © {new Date().getFullYear()} ByeByeDryEye. All rights reserved.
             </p>
           </div>
           </div>
